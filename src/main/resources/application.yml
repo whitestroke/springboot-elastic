@@ -1,0 +1,11 @@
+server:
+  port: 7030
+  servlet:
+    context-path: es-search
+
+
+es:
+  ip: 127.0.0.1
+  port: 9200
+  username: elastic
+  password: elastic
