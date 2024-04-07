@@ -5,7 +5,7 @@ server:
 
 
 es:
-  ip: 127.0.0.1
-  port: 9200
-  username: elastic
-  password: elastic
+  ip: ${es_ip:127.0.0.1}
+  port: ${es_port:9200}
+  username: ${es_username:elastic}
+  password: ${es_password:elastic}
