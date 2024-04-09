@@ -1,7 +1,7 @@
 server:
   port: 7030
   servlet:
-    context-path: es-search
+    context-path: /es-search
 
 
 es:
