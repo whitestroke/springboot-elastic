@@ -9,3 +9,9 @@ es:
   port: ${es_port:9200}
   username: ${es_username:elastic}
   password: ${es_password:elastic}
+
+redis:
+  model: ${redis_model:standalone}
+  ip: ${redis_ip:127.0.0.1}
+  port: ${redis_port:6379}
+  password: ${redis_password:redis}

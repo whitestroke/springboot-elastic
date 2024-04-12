@@ -1,5 +1,6 @@
 package com.lct.springbootjar.springbootes.config.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,18 +19,24 @@ import java.util.Set;
 @Configuration
 public class RedisBean {
 
+    @Value("${redis.ip}")
+    private String redisIp;
+
+    @Value("${redis.port}")
+    private Integer redisPort;
+
+    @Value("${redis.password}")
+    private String redisPassword;
+
     @Bean(name = "BeanIn")
     @ConditionalOnProperty(value = "redis.model",havingValue = "standalone",matchIfMissing = true)
     public JedisPool jedisPool() {
-        String host = "172.17.0.228";
-        Integer port = 6400;
-        String password = "redis_123456";
 
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(1000);
         config.setMaxIdle(500);
         config.setMaxWaitMillis(1000);
-        JedisPool jedisPool = new JedisPool(config, host, port, 1000, password);
+        JedisPool jedisPool = new JedisPool(config, redisIp, redisPort, 1000, redisPassword);
 
         Jedis jedis = jedisPool.getResource();
         // String s = jedis.get("aa");
@@ -40,7 +47,7 @@ public class RedisBean {
     @Bean
     @ConditionalOnProperty(value = "redis.model",havingValue = "cluster",matchIfMissing = false)
     public MyRedisCluster jedisCluster() {
-        HostAndPort hostAndPort = new HostAndPort("172.17.0.228", 6479);
+        HostAndPort hostAndPort = new HostAndPort(redisIp, redisPort);
         Set<HostAndPort> hostAndPortSet = new HashSet<>();
         hostAndPortSet.add(hostAndPort);
 
@@ -58,7 +65,7 @@ public class RedisBean {
                 60000,
                 1000,
                 1000,
-                "redis_123456",
+                redisPassword,
                 jedisPoolConfig
         );
 
